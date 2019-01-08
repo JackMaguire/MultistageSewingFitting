@@ -1,0 +1,216 @@
+<JobDefinitionFile>
+
+ <Job>
+  <Input>
+	  <PDB filename="vav1_start_node_and_partner.pdb" /> EDIT THIS (i.e. scaffold.pdb)
+  </Input>
+ </Job>
+
+ <Common>
+
+  <SCOREFXNS>
+            <ScoreFunction name="common_sfxn" weights="ref2015.wts"/>
+  </SCOREFXNS>
+
+  <RESIDUE_SELECTORS>
+          <Chain name="chain_A" chains="1"/>
+          <Chain name="chain_B" chains="2"/>
+        <ResidueName name="critical_trp" residue_name3="TYR"/>
+	<SecondaryStructure name="loops" overlap="0" minH="1" minE="1" include_terminal_loops="false" ss="L" />		
+	<VirtualResidueSelector name="virtuals" />		
+	<Not name = "real" selector="virtuals"/>
+	<And name = "real_loops" selectors="real,loops"/>
+	<And name = "real_loops_of_B" selectors="real,loops,chain_B"/>
+	<Neighborhood name="near_B" selector="chain_B" distance = "6.0"/>
+	<Not name = "not_near_B" selector="near_B"/>
+	<And name = "A_distant_B" selectors="not_near_B,chain_A"/>
+	<And name = "A_near_B" selectors="near_B,chain_A"/>
+	<Or name = "A_and_A_near_B" selectors="A_near_B,chain_A"/>
+	<ResiduePDBInfoHasLabel name="vitals" property="VITAL_RESIDUE"/>
+  </RESIDUE_SELECTORS>
+
+  <MOVE_MAP_FACTORIES>
+        <MoveMapFactory name="partner_sewing_movemap" bb="0" chi="0">
+                <Backbone residue_selector="chain_B"/>
+                <Chi residue_selector="A_and_A_near_B"/>
+        </MoveMapFactory>
+  </MOVE_MAP_FACTORIES>
+
+
+  <TASKOPERATIONS> 'to' is a suffix for all task-ops | repack interface, minimize all atoms
+	    <InitializeFromCommandline name="ifc"/>
+            <IncludeCurrent name="ic"/>
+            <ExtraRotamersGeneric ex1="true" ex2="false" name="ex1ex2"/>
+        <OperateOnResidueSubset name="repack_partner" selector = "chain_A">
+                <RestrictToRepackingRLT/>
+        </OperateOnResidueSubset>
+        <OperateOnResidueSubset name="do_not_repack_distant_partner" selector = "A_distant_B">
+                <PreventRepackingRLT/>
+        </OperateOnResidueSubset>
+  </TASKOPERATIONS>
+
+  <FILTERS>
+	<PoseCompatibleMotifScorer name="local_by_interaction" first_selector="chain_B" normalize_by_interactions="true" confidence = "0"/>
+        <PoseCompatibleMotifScorer name="longrange_by_interaction" first_selector="chain_B" sequence_gap = "20" normalize_by_interactions="true" confidence = "0"/>
+        <PoseCompatibleMotifScorer name="partner_by_interaction" first_selector="chain_A" second_selector="chain_B" normalize_by_interactions="true" confidence = "0"/>
+
+	<CombinedValue name="weighted_motif_by_interaction" >
+		<Add filter_name="local_by_interaction"/>
+		<Add filter_name="longrange_by_interaction" factor = "10" />
+		<Add filter_name="partner_by_interaction" factor = "10" />
+	</CombinedValue>
+
+	<PoseCompatibleMotifScorer name="local_by_residue" first_selector="chain_B" normalize_by_interactions="false" confidence = "0"/>
+        <PoseCompatibleMotifScorer name="longrange_by_residue" first_selector="chain_B" sequence_gap = "20" normalize_by_interactions="false" confidence = "0"/>
+        <PoseCompatibleMotifScorer name="partner_by_residue" first_selector="chain_A" second_selector="chain_B" normalize_by_interactions="false" confidence = "0"/>
+
+	<CombinedValue name="weighted_motif_by_residue" >
+		<Add filter_name="local_by_residue"/>
+		<Add filter_name="longrange_by_residue" factor = "10" />
+		<Add filter_name="partner_by_residue" factor = "10" />
+	</CombinedValue>
+
+	<PoseCompatibleMotifScorer name="local" first_selector="chain_B" normalize_by_interactions="false" normalize_by_residues="false" confidence = "0"/>
+        <PoseCompatibleMotifScorer name="longrange" first_selector="chain_B" sequence_gap = "20" normalize_by_interactions="false" normalize_by_residues="false" confidence = "0"/>
+        <PoseCompatibleMotifScorer name="partner" first_selector="chain_A" second_selector="chain_B" normalize_by_interactions="false" normalize_by_residues="false" confidence = "0"/>
+
+	<CombinedValue name="weighted_motif" >
+		<Add filter_name="local"/>
+		<Add filter_name="longrange" factor = "10" />
+		<Add filter_name="partner" factor = "30" />
+	</CombinedValue>
+
+	<TrueFilter name="true_filter"/>
+
+	<ResidueCount name="size" confidence="0"/>
+	<ResidueCount name="size_of_A" confidence="0" residue_selector="chain_A"/>
+	<ResidueCount name="size_of_B" confidence="0" residue_selector="chain_B"/>
+        <ScoreType name="sfxn_filter" score_type="total_score" scorefxn="common_sfxn" threshold="999999"/>
+
+	<CalculatorFilter name="normalized_score" equation="total_score / res" confidence="0">
+              <VAR name="total_score" filter="sfxn_filter"/>
+              <VAR name="res" filter="size"/>
+        </CalculatorFilter>
+
+  </FILTERS>
+
+  <MOVERS>
+	<AddFlankingVirtualResiduesMover name="virt" N_term_residues="200" C_term_residues="200" chain_to_modify="2" vital_selector="critical_trp"/>
+	<RootFoldTreeMover name="root" residue_selector="vitals"/>
+	<ChimerizeSuperSecondaryStructuralSegmentsIntoFlankingVirtualResiduesMover name="chim" window_width="2" alignment_max_distance="0.5" decompose_path="/nas/longleaf/home/frankdt/scratch/multistage_SEWING/decompose_test" read_segments_from_decompose_file="true" read_segments_from_pdb_list = "false" permissible_segment_ends="H" model_file_name = "test_motif_file" pdb_file_name = "test_pdbs" max_attempts="1000"/>
+
+	<FilterReportAsPoseExtraScoresMover name="report_weighted_motifscore_by_residue" report_as = "MS_weighted_by_residue" filter_name="weighted_motif_by_residue"/>
+	<FilterReportAsPoseExtraScoresMover name="report_motifscore_by_residue" report_as = "MS_local_by_residue" filter_name="local_by_residue"/>
+	<FilterReportAsPoseExtraScoresMover name="report_longrange_motifscore_by_residue" report_as = "MS_longrange_by_residue" filter_name="longrange_by_residue"/>
+	<FilterReportAsPoseExtraScoresMover name="report_partner_motifscore_by_residue" report_as = "MS_partner_by_residue" filter_name="partner_by_residue"/>
+
+	<FilterReportAsPoseExtraScoresMover name="report_weighted_motifscore_by_interaction" report_as = "MS_weighted_by_interaction" filter_name="weighted_motif_by_interaction"/>
+	<FilterReportAsPoseExtraScoresMover name="report_motifscore_by_interaction" report_as = "MS_local_by_interaction" filter_name="local_by_interaction"/>
+	<FilterReportAsPoseExtraScoresMover name="report_longrange_motifscore_by_interaction" report_as = "MS_longrange_by_interaction" filter_name="longrange_by_interaction"/>
+	<FilterReportAsPoseExtraScoresMover name="report_partner_motifscore_by_interaction" report_as = "MS_partner_by_interaction" filter_name="partner_by_interaction"/>
+
+	<FilterReportAsPoseExtraScoresMover name="report_weighted_motifscore" report_as = "MS_weighted" filter_name="weighted_motif"/>
+	<FilterReportAsPoseExtraScoresMover name="report_motifscore" report_as = "MS_local" filter_name="local"/>
+	<FilterReportAsPoseExtraScoresMover name="report_longrange_motifscore" report_as = "MS_longrange" filter_name="longrange"/>
+	<FilterReportAsPoseExtraScoresMover name="report_partner_motifscore" report_as = "MS_partner" filter_name="partner"/>
+
+	<FilterReportAsPoseExtraScoresMover name="report_size" report_as = "size" filter_name="size"/>
+	<FilterReportAsPoseExtraScoresMover name="report_size_of_A" report_as = "size_of_A" filter_name="size_of_A"/>
+	<FilterReportAsPoseExtraScoresMover name="report_size_of_B" report_as = "size_of_B" filter_name="size_of_B"/>
+
+	<FilterReportAsPoseExtraScoresMover name="report_normalized_score_of_complex" report_as = "normalized_score_of_complex" filter_name="normalized_score"/>
+	<FilterReportAsPoseExtraScoresMover name="report_normalized_score_of_design" report_as = "normalized_score_of_design" filter_name="normalized_score"/>
+
+	<Small name = "small_mover" residue_selector="real_loops_of_B" nmoves = "1" angle_max="12"/>
+	<GenericSimulatedAnnealer name="small_move_gsa" mover_name="small_mover" filter_name="weighted_motif_by_residue" trials="10" sample_type="low" temperature="0.1"/>
+	<Shear name = "shear_mover" residue_selector="real_loops_of_B" nmoves = "1" angle_max="12"/>
+	<GenericSimulatedAnnealer name="shear_move_gsa" mover_name="shear_mover" filter_name="weighted_motif_by_residue" trials="10" sample_type="low" temperature="0.1"/>
+
+	<DeleteRegionMover name="unvirt" residue_selector="virtuals"/>
+	<DeleteRegionMover name="delete_partner" residue_selector="chain_A"/>
+	<InterfaceAnalyzerMover name="interface_analyze" scorefxn = "common_sfxn" pack_separated="false" pack_input = "false" interface="A_B"/>
+	<FastRelax disable_design="false" name="relax_1" repeats="5" scorefxn="common_sfxn" task_operations="ifc,ic,ex1ex2,repack_partner,do_not_repack_distant_partner" movemap_factory="partner_sewing_movemap" relaxscript="rosettacon2018"/>
+	<SwitchResidueTypeSetMover name="to_fa" set="fa_standard"/>
+
+  </MOVERS>
+
+  <PROTOCOLS>
+	<Stage num_runs_per_input_struct="[[A]]" total_num_results_to_keep="[[B]]">
+		<Add mover_name="virt"/>
+		<Add mover_name="root"/>
+		Sort filter="weighted_motif"/>
+		<Sort filter="true_filter"/>
+   	</Stage>
+   	<Stage num_runs_per_input_struct="[[C]]" total_num_results_to_keep="[[D]]">
+   	 	<Add mover_name="chim"/>
+		<Sort filter="weighted_motif_by_residue"/>
+   	</Stage>
+   	<Stage num_runs_per_input_struct="[[E]]" total_num_results_to_keep="[[F]]">
+   	 	<Add mover_name="shear_move_gsa"/>
+		<Sort filter="weighted_motif_by_residue"/>
+   	</Stage>
+   	<Stage num_runs_per_input_struct="[[G]]" total_num_results_to_keep="[[H]]">
+   	 	<Add mover_name="small_move_gsa"/>
+		<Sort filter="weighted_motif_by_residue"/>
+   	</Stage>
+   	<Stage num_runs_per_input_struct="[[I]]" total_num_results_to_keep="[[J]]">
+   	 	<Add mover_name="chim"/>
+		<Sort filter="weighted_motif_by_residue"/>
+   	</Stage>
+   	<Stage num_runs_per_input_struct="[[K]]" total_num_results_to_keep="[[L]]">
+   	 	<Add mover_name="shear_move_gsa"/>
+		<Sort filter="weighted_motif_by_residue"/>
+   	</Stage>
+   	<Stage num_runs_per_input_struct="[[M]]" total_num_results_to_keep="[[N]]">
+   	 	<Add mover_name="small_move_gsa"/>
+		<Sort filter="weighted_motif_by_residue"/>
+   	</Stage>
+   	<Stage num_runs_per_input_struct="[[O]]" total_num_results_to_keep="[[P]]">
+   	 	<Add mover_name="chim"/>
+		<Sort filter="weighted_motif_by_residue"/>
+   	</Stage>
+   	<Stage num_runs_per_input_struct="[[Q]]" total_num_results_to_keep="[[R]]">
+   	 	<Add mover_name="shear_move_gsa"/>
+		<Sort filter="weighted_motif_by_residue"/>
+   	</Stage>
+   	<Stage num_runs_per_input_struct="[[S]]" total_num_results_to_keep="[[T]]">
+   	 	<Add mover_name="small_move_gsa"/>
+		<Sort filter="weighted_motif_by_residue"/>
+   	</Stage>
+   	<Stage num_runs_per_input_struct="[[U]]" total_num_results_to_keep="[[V]]">
+   	 	<Add mover_name="chim"/>
+		<Sort filter="weighted_motif_by_residue"/>
+   	</Stage>
+   	<Stage num_runs_per_input_struct="[[W]]" total_num_results_to_keep="[[X]]">
+   	 	<Add mover_name="shear_move_gsa"/>
+		<Sort filter="weighted_motif_by_residue"/>
+   	</Stage>
+   	<Stage num_runs_per_input_struct="[[Y]]" total_num_results_to_keep="[[Z]]">
+   	 	<Add mover_name="small_move_gsa"/>
+		<Sort filter="weighted_motif_by_residue"/>
+   	</Stage>
+	<Stage num_runs_per_input_struct="1" total_num_results_to_keep="[[Z]]">
+		<Add mover_name="unvirt"/>
+   	 	<Add mover_name="report_weighted_motifscore_by_residue"/>
+   	 	<Add mover_name="report_longrange_motifscore_by_residue"/>
+   	 	<Add mover_name="report_partner_motifscore_by_residue"/>
+   	 	<Add mover_name="report_weighted_motifscore_by_residue"/>
+   	 	<Add mover_name="report_weighted_motifscore_by_interaction"/>
+   	 	<Add mover_name="report_longrange_motifscore_by_interaction"/>
+   	 	<Add mover_name="report_partner_motifscore_by_interaction"/>
+   	 	<Add mover_name="report_weighted_motifscore_by_interaction"/>
+   	 	<Add mover_name="report_weighted_motifscore"/>
+   	 	<Add mover_name="report_longrange_motifscore"/>
+   	 	<Add mover_name="report_partner_motifscore"/>
+   	 	<Add mover_name="report_weighted_motifscore"/>
+		<Add mover_name="relax_1"/>
+		<Add mover_name="interface_analyze"/>
+		<Add mover_name="report_size"/>
+		<Add mover_name="report_normalized_score_of_complex"/>
+		<Add mover_name="delete_partner"/>
+		<Add mover_name="report_normalized_score_of_design"/>
+		<Sort filter="true_filter"/>
+	</Stage>
+  </PROTOCOLS>
+ </Common>
+</JobDefinitionFile>
