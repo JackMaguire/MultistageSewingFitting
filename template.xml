@@ -143,51 +143,51 @@
    	</Stage>
    	<Stage num_runs_per_input_struct="[[C]]" total_num_results_to_keep="[[D]]">
    	 	<Add mover_name="chim"/>
-		<Sort filter="weighted_motif_by_residue"/>
+		<Sort filter="weighted_motif"/>
    	</Stage>
    	<Stage num_runs_per_input_struct="[[E]]" total_num_results_to_keep="[[F]]">
    	 	<Add mover_name="shear_move_gsa"/>
-		<Sort filter="weighted_motif_by_residue"/>
+		<Sort filter="weighted_motif"/>
    	</Stage>
    	<Stage num_runs_per_input_struct="[[G]]" total_num_results_to_keep="[[H]]">
    	 	<Add mover_name="small_move_gsa"/>
-		<Sort filter="weighted_motif_by_residue"/>
+		<Sort filter="weighted_motif"/>
    	</Stage>
    	<Stage num_runs_per_input_struct="[[I]]" total_num_results_to_keep="[[J]]">
    	 	<Add mover_name="chim"/>
-		<Sort filter="weighted_motif_by_residue"/>
+		<Sort filter="weighted_motif"/>
    	</Stage>
    	<Stage num_runs_per_input_struct="[[K]]" total_num_results_to_keep="[[L]]">
    	 	<Add mover_name="shear_move_gsa"/>
-		<Sort filter="weighted_motif_by_residue"/>
+		<Sort filter="weighted_motif"/>
    	</Stage>
    	<Stage num_runs_per_input_struct="[[M]]" total_num_results_to_keep="[[N]]">
    	 	<Add mover_name="small_move_gsa"/>
-		<Sort filter="weighted_motif_by_residue"/>
+		<Sort filter="weighted_motif"/>
    	</Stage>
    	<Stage num_runs_per_input_struct="[[O]]" total_num_results_to_keep="[[P]]">
    	 	<Add mover_name="chim"/>
-		<Sort filter="weighted_motif_by_residue"/>
+		<Sort filter="weighted_motif"/>
    	</Stage>
    	<Stage num_runs_per_input_struct="[[Q]]" total_num_results_to_keep="[[R]]">
    	 	<Add mover_name="shear_move_gsa"/>
-		<Sort filter="weighted_motif_by_residue"/>
+		<Sort filter="weighted_motif"/>
    	</Stage>
    	<Stage num_runs_per_input_struct="[[S]]" total_num_results_to_keep="[[T]]">
    	 	<Add mover_name="small_move_gsa"/>
-		<Sort filter="weighted_motif_by_residue"/>
+		<Sort filter="weighted_motif"/>
    	</Stage>
    	<Stage num_runs_per_input_struct="[[U]]" total_num_results_to_keep="[[V]]">
    	 	<Add mover_name="chim"/>
-		<Sort filter="weighted_motif_by_residue"/>
+		<Sort filter="weighted_motif"/>
    	</Stage>
    	<Stage num_runs_per_input_struct="[[W]]" total_num_results_to_keep="[[X]]">
    	 	<Add mover_name="shear_move_gsa"/>
-		<Sort filter="weighted_motif_by_residue"/>
+		<Sort filter="weighted_motif"/>
    	</Stage>
    	<Stage num_runs_per_input_struct="[[Y]]" total_num_results_to_keep="[[Z]]">
    	 	<Add mover_name="small_move_gsa"/>
-		<Sort filter="weighted_motif_by_residue"/>
+		<Sort filter="weighted_motif"/>
    	</Stage>
 	<Stage num_runs_per_input_struct="1" total_num_results_to_keep="[[Z]]">
 		<Add mover_name="unvirt"/>
