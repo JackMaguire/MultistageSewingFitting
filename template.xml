@@ -16,23 +16,23 @@
           <Chain name="chain_A" chains="1"/>
           <Chain name="chain_B" chains="2"/>
         <ResidueName name="critical_trp" residue_name3="TYR"/>
-	<SecondaryStructure name="loops" overlap="0" minH="1" minE="1" include_terminal_loops="false" ss="L" />		
-	<VirtualResidueSelector name="virtuals" />		
-	<Not name = "real" selector="virtuals"/>
-	<And name = "real_loops" selectors="real,loops"/>
-	<And name = "real_loops_of_B" selectors="real,loops,chain_B"/>
-	<Neighborhood name="near_B" selector="chain_B" distance = "6.0"/>
-	<Not name = "not_near_B" selector="near_B"/>
-	<And name = "A_distant_B" selectors="not_near_B,chain_A"/>
-	<And name = "A_near_B" selectors="near_B,chain_A"/>
-	<Or name = "A_and_A_near_B" selectors="A_near_B,chain_A"/>
-	<ResiduePDBInfoHasLabel name="vitals" property="VITAL_RESIDUE"/>
+        <SecondaryStructure name="loops" overlap="0" minH="1" minE="1" include_terminal_loops="false" ss="L" />
+        <VirtualResidueSelector name="virtuals" />
+        <Not name = "real" selector="virtuals"/>
+        <And name = "real_loops" selectors="real,loops"/>
+        <And name = "real_loops_of_A" selectors="real,loops,chain_A"/>
+        <Neighborhood name="near_A" selector="chain_A" distance = "6.0"/>
+        <Not name = "not_near_A" selector="near_A"/>
+        <And name = "B_distant_A" selectors="not_near_A,chain_B"/>
+        <And name = "B_near_A" selectors="near_A,chain_B"/>
+        <Or name = "A_and_B_near_A" selectors="B_near_A,chain_A"/>
+        <ResiduePDBInfoHasLabel name="vitals" property="VITAL_RESIDUE"/>
   </RESIDUE_SELECTORS>
 
   <MOVE_MAP_FACTORIES>
         <MoveMapFactory name="partner_sewing_movemap" bb="0" chi="0">
-                <Backbone residue_selector="chain_B"/>
-                <Chi residue_selector="A_and_A_near_B"/>
+                <Backbone residue_selector="chain_A"/>
+                <Chi residue_selector="A_and_B_near_A"/>
         </MoveMapFactory>
   </MOVE_MAP_FACTORIES>
 
@@ -44,14 +44,14 @@
         <OperateOnResidueSubset name="repack_partner" selector = "chain_A">
                 <RestrictToRepackingRLT/>
         </OperateOnResidueSubset>
-        <OperateOnResidueSubset name="do_not_repack_distant_partner" selector = "A_distant_B">
+        <OperateOnResidueSubset name="do_not_repack_distant_partner" selector = "B_distant_A">
                 <PreventRepackingRLT/>
         </OperateOnResidueSubset>
   </TASKOPERATIONS>
 
   <FILTERS>
-	<PoseCompatibleMotifScorer name="local_by_interaction" first_selector="chain_B" normalize_by_interactions="true" confidence = "0"/>
-        <PoseCompatibleMotifScorer name="longrange_by_interaction" first_selector="chain_B" sequence_gap = "20" normalize_by_interactions="true" confidence = "0"/>
+	<PoseCompatibleMotifScorer name="local_by_interaction" first_selector="chain_A" normalize_by_interactions="true" confidence = "0"/>
+        <PoseCompatibleMotifScorer name="longrange_by_interaction" first_selector="chain_A" sequence_gap = "20" normalize_by_interactions="true" confidence = "0"/>
         <PoseCompatibleMotifScorer name="partner_by_interaction" first_selector="chain_A" second_selector="chain_B" normalize_by_interactions="true" confidence = "0"/>
 
 	<CombinedValue name="weighted_motif_by_interaction" >
@@ -60,8 +60,8 @@
 		<Add filter_name="partner_by_interaction" factor = "10" />
 	</CombinedValue>
 
-	<PoseCompatibleMotifScorer name="local_by_residue" first_selector="chain_B" normalize_by_interactions="false" confidence = "0"/>
-        <PoseCompatibleMotifScorer name="longrange_by_residue" first_selector="chain_B" sequence_gap = "20" normalize_by_interactions="false" confidence = "0"/>
+	<PoseCompatibleMotifScorer name="local_by_residue" first_selector="chain_A" normalize_by_interactions="false" confidence = "0"/>
+        <PoseCompatibleMotifScorer name="longrange_by_residue" first_selector="chain_A" sequence_gap = "20" normalize_by_interactions="false" confidence = "0"/>
         <PoseCompatibleMotifScorer name="partner_by_residue" first_selector="chain_A" second_selector="chain_B" normalize_by_interactions="false" confidence = "0"/>
 
 	<CombinedValue name="weighted_motif_by_residue" >
@@ -70,8 +70,8 @@
 		<Add filter_name="partner_by_residue" factor = "10" />
 	</CombinedValue>
 
-	<PoseCompatibleMotifScorer name="local" first_selector="chain_B" normalize_by_interactions="false" normalize_by_residues="false" confidence = "0"/>
-        <PoseCompatibleMotifScorer name="longrange" first_selector="chain_B" sequence_gap = "20" normalize_by_interactions="false" normalize_by_residues="false" confidence = "0"/>
+	<PoseCompatibleMotifScorer name="local" first_selector="chain_A" normalize_by_interactions="false" normalize_by_residues="false" confidence = "0"/>
+        <PoseCompatibleMotifScorer name="longrange" first_selector="chain_A" sequence_gap = "20" normalize_by_interactions="false" normalize_by_residues="false" confidence = "0"/>
         <PoseCompatibleMotifScorer name="partner" first_selector="chain_A" second_selector="chain_B" normalize_by_interactions="false" normalize_by_residues="false" confidence = "0"/>
 
 	<CombinedValue name="weighted_motif" >
@@ -127,7 +127,7 @@
 	<GenericSimulatedAnnealer name="shear_move_gsa" mover_name="shear_mover" filter_name="weighted_motif_by_residue" trials="10" sample_type="low" temperature="0.1"/>
 
 	<DeleteRegionMover name="unvirt" residue_selector="virtuals"/>
-	<DeleteRegionMover name="delete_partner" residue_selector="chain_A"/>
+	<DeleteRegionMover name="delete_partner" residue_selector="chain_B"/>
 	<InterfaceAnalyzerMover name="interface_analyze" scorefxn = "common_sfxn" pack_separated="false" pack_input = "false" interface="A_B"/>
 	<FastRelax disable_design="false" name="relax_1" repeats="5" scorefxn="common_sfxn" task_operations="ifc,ic,ex1ex2,repack_partner,do_not_repack_distant_partner" movemap_factory="partner_sewing_movemap" relaxscript="rosettacon2018"/>
 	<SwitchResidueTypeSetMover name="to_fa" set="fa_standard"/>
