@@ -135,7 +135,7 @@
   </MOVERS>
 
   <PROTOCOLS>
-	<Stage num_runs_per_input_struct="[[A]]" total_num_results_to_keep="[[B]]">
+	<Stage num_runs_per_input_struct="1" total_num_results_to_keep="1">
 		<Add mover_name="virt"/>
 		<Add mover_name="root"/>
 		Sort filter="weighted_motif"/>
@@ -213,4 +213,32 @@
 	</Stage>
   </PROTOCOLS>
  </Common>
+	
+<!--
+	Original Values:
+	C	1000
+	D	100
+	E	10
+	F	100
+	G	10
+	H	100
+	I	10
+	J	100
+	K	10
+	L	100
+	M	10
+	N	100
+	O	10
+	P	100
+	Q	10
+	R	100
+	S	10
+	T	100
+	U	10
+	V	100
+	W	10
+	X	100
+	Y	10
+	Z	1000
+-->
 </JobDefinitionFile>
