@@ -1,18 +1,24 @@
 #!/bin/bash
 
-NTRAJ=1000
+A=100
 
 for C in 1 5 10 15; do
 
-    for D in 0.05 0.1 0.15 0.25; do
+    for d in 0.05 0.1 0.15 0.25; do
+
+	D=`echo "$A * $C * $d" | bc | awk -F. '{print $1}'`
 
 	for E in 1 5 10 15; do
 
-	    for F in 0.05 0.1 0.15 0.25; do
+	    for f in 0.05 0.1 0.15 0.25; do
+
+		F=`echo "$D * $E * $f" | bc | awk -F. '{print $1}'`
 
 		for G in 1 5 10; do
 		
-		    for H in 0.1 0.15 0.25; do
+		    for h in 0.1 0.15 0.25; do
+
+			H=`echo "$F * $G * $h" | bc | awk -F. '{print $1}'`
 
 			# create temp script
 			cat template.xml \
