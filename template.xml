@@ -141,51 +141,51 @@
 		Sort filter="weighted_motif"/>
 		<Sort filter="true_filter"/>
    	</Stage>
-   	<Stage num_runs_per_input_struct="[[C]]" total_num_results_to_keep="[[D]]">
+   	<Stage num_runs_per_input_struct="##C##" total_num_results_to_keep="##D##">
    	 	<Add mover_name="chim"/>
 		<Sort filter="weighted_motif"/>
    	</Stage>
-   	<Stage num_runs_per_input_struct="[[E]]" total_num_results_to_keep="[[F]]">
+   	<Stage num_runs_per_input_struct="##E##" total_num_results_to_keep="##F##">
    	 	<Add mover_name="shear_move_gsa"/>
 		<Sort filter="weighted_motif"/>
    	</Stage>
-   	<Stage num_runs_per_input_struct="[[G]]" total_num_results_to_keep="[[H]]">
+   	<Stage num_runs_per_input_struct="##G##" total_num_results_to_keep="##H##">
    	 	<Add mover_name="small_move_gsa"/>
 		<Sort filter="weighted_motif"/>
    	</Stage>
-   	<Stage num_runs_per_input_struct="[[C]]" total_num_results_to_keep="[[D]]">
+   	<Stage num_runs_per_input_struct="##C##" total_num_results_to_keep="##D##">
    	 	<Add mover_name="chim"/>
 		<Sort filter="weighted_motif"/>
    	</Stage>
-   	<Stage num_runs_per_input_struct="[[E]]" total_num_results_to_keep="[[F]]">
+   	<Stage num_runs_per_input_struct="##E##" total_num_results_to_keep="##F##">
    	 	<Add mover_name="shear_move_gsa"/>
 		<Sort filter="weighted_motif"/>
    	</Stage>
-   	<Stage num_runs_per_input_struct="[[G]]" total_num_results_to_keep="[[H]]">
+   	<Stage num_runs_per_input_struct="##G##" total_num_results_to_keep="##H##">
    	 	<Add mover_name="small_move_gsa"/>
 		<Sort filter="weighted_motif"/>
    	</Stage>
-   	<Stage num_runs_per_input_struct="[[C]]" total_num_results_to_keep="[[D]]">
+   	<Stage num_runs_per_input_struct="##C##" total_num_results_to_keep="##D##">
    	 	<Add mover_name="chim"/>
 		<Sort filter="weighted_motif"/>
    	</Stage>
-   	<Stage num_runs_per_input_struct="[[E]]" total_num_results_to_keep="[[F]]">
+   	<Stage num_runs_per_input_struct="##E##" total_num_results_to_keep="##F##">
    	 	<Add mover_name="shear_move_gsa"/>
 		<Sort filter="weighted_motif"/>
    	</Stage>
-   	<Stage num_runs_per_input_struct="[[G]]" total_num_results_to_keep="[[H]]">
+   	<Stage num_runs_per_input_struct="##G##" total_num_results_to_keep="##H##">
    	 	<Add mover_name="small_move_gsa"/>
 		<Sort filter="weighted_motif"/>
    	</Stage>
-   	<Stage num_runs_per_input_struct="[[C]]" total_num_results_to_keep="[[D]]">
+   	<Stage num_runs_per_input_struct="##C##" total_num_results_to_keep="##D##">
    	 	<Add mover_name="chim"/>
 		<Sort filter="weighted_motif"/>
    	</Stage>
-   	<Stage num_runs_per_input_struct="[[E]]" total_num_results_to_keep="[[F]]">
+   	<Stage num_runs_per_input_struct="##E##" total_num_results_to_keep="##F##">
    	 	<Add mover_name="shear_move_gsa"/>
 		<Sort filter="weighted_motif"/>
    	</Stage>
-   	<Stage num_runs_per_input_struct="[[G]]" total_num_results_to_keep="[[H]]">
+   	<Stage num_runs_per_input_struct="##G##" total_num_results_to_keep="##H##">
    	 	<Add mover_name="small_move_gsa"/>
 		<Sort filter="weighted_motif"/>
    	</Stage>
