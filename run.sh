@@ -46,6 +46,7 @@ for C in 5 10 15; do
 
 			# create temp script
 			cat template.xml \
+			    | sed "s/##A##/$A/g" \
 			    | sed "s/##C##/$C/g" \
 			    | sed "s/##D##/$D/g" \
 			    | sed "s/##E##/$E/g" \

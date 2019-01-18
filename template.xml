@@ -174,7 +174,7 @@
   </MOVERS>
 
   <PROTOCOLS>
-	<Stage num_runs_per_input_struct="1" total_num_results_to_keep="1">
+	<Stage num_runs_per_input_struct="##A##" total_num_results_to_keep="1">
 		<Add mover_name="virt"/>
 		<Add mover_name="root"/>
 		Sort filter="weighted_motif"/>
