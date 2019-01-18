@@ -65,6 +65,8 @@ for C in 5 10 15; do
 			#Let's not use /usr/bin/time and just to time counting internally
 			timeout 1h mpirun -n 12 multistage_rosetta_scripts.mpiserialization.linuxgccrelease @ flags
 
+			cat score.sc >> ../all_scores.sc
+
 			#ANALYZE
 			for x in 1 5 10 25 50 100; do
 			    mean_score=$(awk -v c1=MS_weighted -f ../print_column_no_header.awk score.sc \
