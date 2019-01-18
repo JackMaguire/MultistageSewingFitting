@@ -52,7 +52,7 @@ for C in 5 10 15; do
 			    | sed "s/##E##/$E/g" \
 			    | sed "s/##F##/$F/g" \
 			    | sed "s/##G##/$G/g" \
-			    | sed "s/##H##/$H/g" >> temp.xml
+			    | sed "s/##H##/$H/g" > temp.xml
 
 			#exit 0
 
