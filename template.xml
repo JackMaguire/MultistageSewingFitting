@@ -49,6 +49,10 @@
         </OperateOnResidueSubset>
   </TASKOPERATIONS>
 
+  <SIMPLE_METRICS>
+    <TimingProfileMetric name="timing" />
+  </SIMPLE_METRICS>
+
   <FILTERS>
 	<PoseCompatibleMotifScorer name="local_by_interaction" first_selector="chain_A" normalize_by_interactions="true" confidence = "0"/>
         <PoseCompatibleMotifScorer name="longrange_by_interaction" first_selector="chain_A" sequence_gap = "20" normalize_by_interactions="true" confidence = "0"/>
@@ -132,6 +136,41 @@
 	<FastRelax disable_design="false" name="relax_1" repeats="5" scorefxn="common_sfxn" task_operations="ifc,ic,ex1ex2,repack_partner,do_not_repack_distant_partner" movemap_factory="partner_sewing_movemap" relaxscript="rosettacon2018"/>
 	<SwitchResidueTypeSetMover name="to_fa" set="fa_standard"/>
 
+	<RunSimpleMetrics name="t1" metrics="timing" prefix="t1_" />
+	<RunSimpleMetrics name="t2" metrics="timing" prefix="t2_" />
+
+	<RunSimpleMetrics name="t3" metrics="timing" prefix="t3_" />
+	<RunSimpleMetrics name="t4" metrics="timing" prefix="t4_" />
+
+	<RunSimpleMetrics name="t5" metrics="timing" prefix="t5_" />
+	<RunSimpleMetrics name="t6" metrics="timing" prefix="t6_" />
+
+	<RunSimpleMetrics name="t7" metrics="timing" prefix="t7_" />
+	<RunSimpleMetrics name="t8" metrics="timing" prefix="t8_" />
+
+	<RunSimpleMetrics name="t9" metrics="timing" prefix="t9_" />
+	<RunSimpleMetrics name="t10" metrics="timing" prefix="t10_" />
+
+	<RunSimpleMetrics name="t11" metrics="timing" prefix="t11_" />
+	<RunSimpleMetrics name="t12" metrics="timing" prefix="t12_" />
+
+	<RunSimpleMetrics name="t13" metrics="timing" prefix="t13_" />
+	<RunSimpleMetrics name="t14" metrics="timing" prefix="t14_" />
+
+	<RunSimpleMetrics name="t15" metrics="timing" prefix="t15_" />
+	<RunSimpleMetrics name="t16" metrics="timing" prefix="t16_" />
+
+	<RunSimpleMetrics name="t17" metrics="timing" prefix="t17_" />
+	<RunSimpleMetrics name="t18" metrics="timing" prefix="t18_" />
+
+	<RunSimpleMetrics name="t19" metrics="timing" prefix="t19_" />
+	<RunSimpleMetrics name="t20" metrics="timing" prefix="t20_" />
+
+	<RunSimpleMetrics name="t21" metrics="timing" prefix="t21_" />
+	<RunSimpleMetrics name="t22" metrics="timing" prefix="t22_" />
+
+	<RunSimpleMetrics name="t23" metrics="timing" prefix="t23_" />
+	<RunSimpleMetrics name="t24" metrics="timing" prefix="t24_" />
   </MOVERS>
 
   <PROTOCOLS>
@@ -142,51 +181,75 @@
 		<Sort filter="true_filter"/>
    	</Stage>
    	<Stage num_runs_per_input_struct="##C##" total_num_results_to_keep="##D##">
+   	 	<Add mover_name="t1"/>
    	 	<Add mover_name="chim"/>
+   	 	<Add mover_name="t2"/>
 		<Sort filter="weighted_motif"/>
    	</Stage>
    	<Stage num_runs_per_input_struct="##E##" total_num_results_to_keep="##F##">
+   	 	<Add mover_name="t3"/>
    	 	<Add mover_name="shear_move_gsa"/>
+   	 	<Add mover_name="t4"/>
 		<Sort filter="weighted_motif"/>
    	</Stage>
    	<Stage num_runs_per_input_struct="##G##" total_num_results_to_keep="##H##">
+   	 	<Add mover_name="t5"/>
    	 	<Add mover_name="small_move_gsa"/>
+   	 	<Add mover_name="t6"/>
 		<Sort filter="weighted_motif"/>
    	</Stage>
    	<Stage num_runs_per_input_struct="##C##" total_num_results_to_keep="##D##">
+   	 	<Add mover_name="t7"/>
    	 	<Add mover_name="chim"/>
+   	 	<Add mover_name="t8"/>
 		<Sort filter="weighted_motif"/>
    	</Stage>
    	<Stage num_runs_per_input_struct="##E##" total_num_results_to_keep="##F##">
+   	 	<Add mover_name="t9"/>
    	 	<Add mover_name="shear_move_gsa"/>
+   	 	<Add mover_name="t10"/>
 		<Sort filter="weighted_motif"/>
    	</Stage>
    	<Stage num_runs_per_input_struct="##G##" total_num_results_to_keep="##H##">
+   	 	<Add mover_name="t11"/>
    	 	<Add mover_name="small_move_gsa"/>
+   	 	<Add mover_name="t12"/>
 		<Sort filter="weighted_motif"/>
    	</Stage>
    	<Stage num_runs_per_input_struct="##C##" total_num_results_to_keep="##D##">
+   	 	<Add mover_name="t13"/>
    	 	<Add mover_name="chim"/>
+   	 	<Add mover_name="t14"/>
 		<Sort filter="weighted_motif"/>
    	</Stage>
    	<Stage num_runs_per_input_struct="##E##" total_num_results_to_keep="##F##">
+   	 	<Add mover_name="t15"/>
    	 	<Add mover_name="shear_move_gsa"/>
+   	 	<Add mover_name="t16"/>
 		<Sort filter="weighted_motif"/>
    	</Stage>
    	<Stage num_runs_per_input_struct="##G##" total_num_results_to_keep="##H##">
+   	 	<Add mover_name="t17"/>
    	 	<Add mover_name="small_move_gsa"/>
+   	 	<Add mover_name="t18"/>
 		<Sort filter="weighted_motif"/>
    	</Stage>
    	<Stage num_runs_per_input_struct="##C##" total_num_results_to_keep="##D##">
+   	 	<Add mover_name="t19"/>
    	 	<Add mover_name="chim"/>
+   	 	<Add mover_name="t20"/>
 		<Sort filter="weighted_motif"/>
    	</Stage>
    	<Stage num_runs_per_input_struct="##E##" total_num_results_to_keep="##F##">
+   	 	<Add mover_name="t21"/>
    	 	<Add mover_name="shear_move_gsa"/>
+   	 	<Add mover_name="t22"/>
 		<Sort filter="weighted_motif"/>
    	</Stage>
    	<Stage num_runs_per_input_struct="##G##" total_num_results_to_keep="##H##">
+   	 	<Add mover_name="t23"/>
    	 	<Add mover_name="small_move_gsa"/>
+   	 	<Add mover_name="t24"/>
 		<Sort filter="weighted_motif"/>
    	</Stage>
 	<Stage num_runs_per_input_struct="1" total_num_results_to_keep="1000">
