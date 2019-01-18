@@ -1,5 +1,31 @@
 #!/bin/bash
 
+# Variables:
+# <Stage num_runs_per_input_struct="##A##" total_num_results_to_keep="1">
+#         <Add mover_name="virt"/>
+#         <Add mover_name="root"/>
+#         Sort filter="weighted_motif"/>
+#         <Sort filter="true_filter"/>
+# </Stage>
+# <Stage num_runs_per_input_struct="##C##" total_num_results_to_keep="##D##">
+#         <Add mover_name="t1"/>
+#         <Add mover_name="chim"/>
+#         <Add mover_name="t2"/>
+#         <Sort filter="weighted_motif"/>
+# </Stage>
+# <Stage num_runs_per_input_struct="##E##" total_num_results_to_keep="##F##">
+#         <Add mover_name="t3"/>
+#         <Add mover_name="shear_move_gsa"/>
+#         <Add mover_name="t4"/>
+#         <Sort filter="weighted_motif"/>
+# </Stage>
+# <Stage num_runs_per_input_struct="##G##" total_num_results_to_keep="##H##">
+#         <Add mover_name="t5"/>
+#         <Add mover_name="small_move_gsa"/>
+#         <Add mover_name="t6"/>
+#         <Sort filter="weighted_motif"/>
+# </Stage>
+
 A=100
 
 if [ -f _results ]; then
@@ -33,7 +59,7 @@ for C in 5 10 15; do
 		fi
 
 		for G in 1 5 10; do
-		
+
 		    for h in 0.1 0.15 0.25; do
 
 			H=`echo "$F * $G * $h" | bc | awk -F. '{print $1}'`
@@ -87,7 +113,7 @@ for C in 5 10 15; do
 	    done #F
 
 	done #E
-	
+
     done #D
 
 done #C
