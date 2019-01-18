@@ -5,3 +5,15 @@
 -mpi_tracer_to_file mpi
 -mute all #just doing this to save time/space. Feel free to unmute anything interesting
 -unmute protocols
+
+-mh:score:use_ss1 true         # applicable only to "BB_BB motifs, match secondary structure on first (target) res"
+-mh:score:use_ss2 true         # applicable only to "BB_BB motifs, match secondary structure on second (binder) res"
+-mh:score:use_aa1 false        # applicable only to "BB_BB motifs, match AA identity on first (target) res"
+-mh:score:use_aa2 false        # applicable only to "BB_BB motifs, match AA identity on second (binder) res"
+
+-mh:path:motifs /home/frankdt/scratch/Rosetta/main/database/additional_protocol_data/sewing/xsmax_bb_ss_AILV_resl0.8_msc0.3/xsmax_bb_ss_AILV_resl0.8_msc0.3.rpm.bin.gz
+-mh:path:scores_BB_BB /home/frankdt/scratch/Rosetta/main/database/additional_protocol_data/sewing/xsmax_bb_ss_AILV_resl0.8_msc0.3/xsmax_bb_ss_AILV_resl0.8_msc0.3
+
+-mh:gen_reverse_motifs_on_load false     # I think the inverse motifs are already in the datafiles
+
+-linmem_ig 2
