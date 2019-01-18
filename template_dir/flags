@@ -1,0 +1,3 @@
+-in:file:job_definition_file ../temp.xml
+-jd3:n_archive_nodes 0
+-jd3:archive_on_disk archives
