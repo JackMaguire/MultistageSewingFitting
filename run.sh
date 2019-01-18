@@ -32,13 +32,12 @@ for C in 5 10 15; do
 		    continue;
 		fi
 
-
 		for G in 1 5 10; do
 		
 		    for h in 0.1 0.15 0.25; do
 
 			H=`echo "$F * $G * $h" | bc | awk -F. '{print $1}'`
-			#echo $F $G $h `echo "$F * $G * $h" | bc` $H
+
 			if [[ ${#H} -eq "0" ]]; then
 			    continue;
 			elif [[ $H -eq 0 ]]; then
@@ -62,6 +61,7 @@ for C in 5 10 15; do
 			#RUN
 			#/usr/bin/time -f "%U"
 			#Let's not use /usr/bin/time and just to time counting internally
+			echo Running $A $C $d $D $E $f $F $G $h $H `date`
 			timeout 1h mpirun -n 12 multistage_rosetta_scripts.mpiserialization.linuxgccrelease @ flags
 
 			cat score.sc >> ../all_scores.sc
