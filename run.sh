@@ -38,7 +38,7 @@ echo "NTRAJ C d D E f F G h H num_designs mean_score" > _results
 
 for C in 5 10 15; do
 
-    for d in 0.05 0.1 0.15; do
+    for d in 0.05 0.1 0.15; do # d is fraction to keep
 
 	D=`echo "$A * $C * $d" | bc | awk -F. '{print $1}'`
 	if [[ ${#D} -eq "0" ]]; then
@@ -49,7 +49,7 @@ for C in 5 10 15; do
 
 	for E in 5 10 15; do
 
-	    for f in 0.05 0.1 0.15; do
+	    for f in 0.05 0.1 0.15; do # fraction to keep
 
 		F=`echo "$D * $E * $f" | bc | awk -F. '{print $1}'`
 		if [[ ${#F} -eq "0" ]]; then
@@ -60,7 +60,7 @@ for C in 5 10 15; do
 
 		for G in 1 5 10; do
 
-		    for h in 0.1 0.15 0.25; do
+		    for h in 0.1 0.15 0.25; do # fraction to keep
 
 			H=`echo "$F * $G * $h" | bc | awk -F. '{print $1}'`
 
