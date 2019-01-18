@@ -266,12 +266,12 @@
    	 	<Add mover_name="report_longrange_motifscore"/>
    	 	<Add mover_name="report_partner_motifscore"/>
    	 	<Add mover_name="report_weighted_motifscore"/>
-		<Add mover_name="relax_1"/>
-		<Add mover_name="interface_analyze"/>
-		<Add mover_name="report_size"/>
-		<Add mover_name="report_normalized_score_of_complex"/>
-		<Add mover_name="delete_partner"/>
-		<Add mover_name="report_normalized_score_of_design"/>
+		Add mover_name="relax_1"/>
+		Add mover_name="interface_analyze"/>
+		Add mover_name="report_size"/>
+		Add mover_name="report_normalized_score_of_complex"/>
+		Add mover_name="delete_partner"/>
+		Add mover_name="report_normalized_score_of_design"/>
 		<Sort filter="true_filter"/>
 	</Stage>
   </PROTOCOLS>
