@@ -1,3 +1,7 @@
 -in:file:job_definition_file ../temp.xml
 -jd3:n_archive_nodes 0
 -jd3:archive_on_disk archives
+
+-mpi_tracer_to_file mpi
+-mute all #just doing this to save time/space. Feel free to unmute anything interesting
+-unmute protocols
