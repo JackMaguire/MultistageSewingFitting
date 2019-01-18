@@ -62,7 +62,7 @@ for C in 5 10 15; do
 			#RUN
 			#/usr/bin/time -f "%U"
 			#Let's not use /usr/bin/time and just to time counting internally
-			timeout --kill-after=1h mpirun -n 12 multistage_rosetta_scripts.mpiserialization.linuxgccrelease @ flags
+			timeout 1h mpirun -n 12 multistage_rosetta_scripts.mpiserialization.linuxgccrelease @ ../flags
 
 			cat score.sc >> ../all_scores.sc
 
