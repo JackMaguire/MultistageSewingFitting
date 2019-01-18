@@ -61,7 +61,9 @@ for C in 5 10 15; do
 			cd working_dir
 
 			#RUN
-			/usr/bin/time -f "%U" timeout 1h mpirun -n 12 multistage_rosetta_scripts.mpiserialization.linuxgccrelease @ flags
+			#/usr/bin/time -f "%U"
+			#Let's not use /usr/bin/time and just to time counting internally
+			timeout 1h mpirun -n 12 multistage_rosetta_scripts.mpiserialization.linuxgccrelease @ flags
 
 			#ANALYZE
 			for x in 1 5 10 25 50 100; do
