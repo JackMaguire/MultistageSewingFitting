@@ -125,9 +125,9 @@
 	<FilterReportAsPoseExtraScoresMover name="report_normalized_score_of_complex" report_as = "normalized_score_of_complex" filter_name="normalized_score"/>
 	<FilterReportAsPoseExtraScoresMover name="report_normalized_score_of_design" report_as = "normalized_score_of_design" filter_name="normalized_score"/>
 
-	<Small name = "small_mover" residue_selector="real_loops_of_B" nmoves = "1" angle_max="12"/>
+	<Small name = "small_mover" residue_selector="real_loops_of_A" nmoves = "1" angle_max="12"/>
 	<GenericSimulatedAnnealer name="small_move_gsa" mover_name="small_mover" filter_name="weighted_motif_by_residue" trials="10" sample_type="low" temperature="0.1"/>
-	<Shear name = "shear_mover" residue_selector="real_loops_of_B" nmoves = "1" angle_max="12"/>
+	<Shear name = "shear_mover" residue_selector="real_loops_of_A" nmoves = "1" angle_max="12"/>
 	<GenericSimulatedAnnealer name="shear_move_gsa" mover_name="shear_mover" filter_name="weighted_motif_by_residue" trials="10" sample_type="low" temperature="0.1"/>
 
 	<DeleteRegionMover name="unvirt" residue_selector="virtuals"/>
