@@ -38,8 +38,7 @@ for C in 5 10 15; do
 		    for h in 0.1 0.15 0.25; do
 
 			H=`echo "$F * $G * $h" | bc | awk -F. '{print $1}'`
-			echo $F $G $h `$F * $G * $h` $H
-
+			#echo $F $G $h `echo "$F * $G * $h" | bc` $H
 			if [[ ${#H} -eq "0" ]]; then
 			    continue;
 			elif [[ $H -eq 0 ]]; then
