@@ -101,7 +101,7 @@
   <MOVERS>
 	<AddFlankingVirtualResiduesMover name="virt" N_term_residues="200" C_term_residues="200" chain_to_modify="2" vital_selector="critical_trp"/>
 	<RootFoldTreeMover name="root" residue_selector="vitals"/>
-	<SewAnythingAddMover name="chim" window_width="2" alignment_max_distance="0.5" decompose_path="/nas/longleaf/home/frankdt/scratch/multistage_SEWING/decompose_test" read_segments_from_decompose_file="true" read_segments_from_pdb_list = "false" permissible_segment_ends="H" model_file_name = "test_motif_file" pdb_file_name = "test_pdbs" max_attempts="1000"/>
+	<SewAnythingAddMover name="chim" window_width="2" alignment_max_distance="0.5" decompose_path="/home/frankdt/scratch/SewAnything_example_files/example_decompose_file" read_segments_from_decompose_file="true" read_segments_from_pdb_list = "false" permissible_segment_ends="H" model_file_name = "test_motif_file" pdb_file_name = "test_pdbs" max_attempts="1000"/>
 
 	<FilterReportAsPoseExtraScoresMover name="report_weighted_motifscore_by_residue" report_as = "MS_weighted_by_residue" filter_name="weighted_motif_by_residue"/>
 	<FilterReportAsPoseExtraScoresMover name="report_motifscore_by_residue" report_as = "MS_local_by_residue" filter_name="local_by_residue"/>
