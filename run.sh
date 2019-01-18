@@ -68,10 +68,12 @@ for C in 5 10 15; do
 
 			#ANALYZE
 			for x in 1 5 10 25 50 100; do
-			    mean_score=$(awk -v c1=MS_weighted -f ../print_column_no_header.awk score.sc \
-					     | sort -nk1 | head -n $x | awk -f ../average.awk
-				      )
-			    echo $A $C $d $D $E $f $F $G $h $H $x $mean_score >> ../_results
+			    if [[ `grep vav1_start_node_and_partner score.sc | wc -l` -ge $x ]]; then
+				mean_score=$(awk -v c1=MS_weighted -f ../print_column_no_header.awk score.sc \
+						 | sort -nk1 | head -n $x | awk -f ../average.awk
+					  )
+				echo $A $C $d $D $E $f $F $G $h $H $x $mean_score >> ../_results
+			    fi
 			done
 
 			cd ../
