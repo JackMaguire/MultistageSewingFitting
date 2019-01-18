@@ -26,7 +26,7 @@
 #         <Sort filter="weighted_motif"/>
 # </Stage>
 
-A=100
+A=100 #number of trajectories
 
 if [ -f _results ]; then
     echo "Will not overwrite existing _results file" 1>&2
