@@ -13,3 +13,37 @@ stage11=$(grep vav all_scores.sc | awk '{print $27 - $26 }' | awk -f average.awk
 stage12=$(grep vav all_scores.sc | awk '{print $29 - $28 }' | awk -f average.awk)
 
 echo $stage1 $stage2 $stage3 $stage4 $stage5 $stage6 $stage7 $stage8 $stage9 $stage10 $stage11 $stage12
+
+
+grep -v NTRAJ _results | while read line; do
+  total_minutes=0.0
+  n_traj=`echo $line | awk '{print $1}'`
+  C=`echo $line | awk '{print $2}'`
+  D=`echo $line | awk '{print $4}'`
+  E=`echo $line | awk '{print $5}'`
+  F=`echo $line | awk '{print $7}'`
+  G=`echo $line | awk '{print $8}'`
+  H=`echo $line | awk '{print $10}'`
+  
+  #stage 1
+  n_stage_1=$(echo "$n_traj * $C" | bc -l)
+  total_minutes_temp=$(echo "$total_minutes + ( $stage1 * $n_stage_1 )" | bc -l)
+  total_minutes=$total_minutes_temp
+
+  #stage 2
+  n_stage_2=$(echo "$D * $E" | bc -l)
+  total_minutes_temp=$(echo "$total_minutes + ( $stage2 * $n_stage_2 )" | bc -l)
+  total_minutes=$total_minutes_temp
+  
+  #stage 3
+  n_stage_3=$(echo "$F * $G" | bc -l)
+  total_minutes_temp=$(echo "$total_minutes + ( $stage3 * $n_stage_3 )" | bc -l)
+  total_minutes=$total_minutes_temp
+  
+  #stage 4
+  n_stage_4=$(echo "$H * $C" | bc -l)
+  total_minutes_temp=$(echo "$total_minutes + ( $stage4 * $n_stage_4 )" | bc -l)
+  total_minutes=$total_minutes_temp
+
+  echo $total_minutes
+done
