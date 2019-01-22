@@ -44,6 +44,46 @@ grep -v NTRAJ _results | while read line; do
   n_stage_4=$(echo "$H * $C" | bc -l)
   total_minutes_temp=$(echo "$total_minutes + ( $stage4 * $n_stage_4 )" | bc -l)
   total_minutes=$total_minutes_temp
+  
+  #stage 5
+  n_stage_5=$(echo "$D * $E" | bc -l)
+  total_minutes_temp=$(echo "$total_minutes + ( $stage5 * $n_stage_5 )" | bc -l)
+  total_minutes=$total_minutes_temp
+  
+  #stage 6
+  n_stage_6=$(echo "$H * $C" | bc -l)
+  total_minutes_temp=$(echo "$total_minutes + ( $stage6 * $n_stage_6 )" | bc -l)
+  total_minutes=$total_minutes_temp
 
+  #stage 7
+  n_stage_7=$(echo "$H * $C" | bc -l)
+  total_minutes_temp=$(echo "$total_minutes + ( $stage7 * $n_stage_7 )" | bc -l)
+  total_minutes=$total_minutes_temp
+  
+  #stage 8
+  n_stage_8=$(echo "$D * $E" | bc -l)
+  total_minutes_temp=$(echo "$total_minutes + ( $stage8 * $n_stage_8 )" | bc -l)
+  total_minutes=$total_minutes_temp
+  
+  #stage 9
+  n_stage_9=$(echo "$H * $C" | bc -l)
+  total_minutes_temp=$(echo "$total_minutes + ( $stage9 * $n_stage_9 )" | bc -l)
+  total_minutes=$total_minutes_temp
+  
+  #stage 10
+  n_stage_10=$(echo "$H * $C" | bc -l)
+  total_minutes_temp=$(echo "$total_minutes + ( $stage10 * $n_stage_10 )" | bc -l)
+  total_minutes=$total_minutes_temp
+  
+  #stage 11
+  n_stage_11=$(echo "$D * $E" | bc -l)
+  total_minutes_temp=$(echo "$total_minutes + ( $stage11 * $n_stage_11 )" | bc -l)
+  total_minutes=$total_minutes_temp
+  
+  #stage 12
+  n_stage_12=$(echo "$H * $C" | bc -l)
+  total_minutes_temp=$(echo "$total_minutes + ( $stage12 * $n_stage_12 )" | bc -l)
+  total_minutes=$total_minutes_temp
+  
   echo $total_minutes
 done
