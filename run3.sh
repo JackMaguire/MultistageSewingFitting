@@ -26,7 +26,7 @@
 #         <Sort filter="weighted_motif"/>
 # </Stage>
 
-A=100 #number of trajectories
+A=500 #number of trajectories
 
 if [ -f _results ]; then
     echo "Will not overwrite existing _results file" 1>&2
@@ -36,9 +36,9 @@ fi
 #echo $A $C $d $D $E $f $F $G $h $H $x $mean_score >> _results
 echo "NTRAJ C d D E f F G h H num_designs mean_score" > _results
 
-for C in 5 10 15; do
+for C in 8 10 13; do #centered on 10
 
-    for d in 0.05 0.1 0.15; do # d is fraction to keep
+    for d in 0.03 0.05 0.08; do # centered on 0.05
 
 	D=`echo "$A * $C * $d" | bc | awk -F. '{print $1}'`
 	if [[ ${#D} -eq "0" ]]; then
@@ -47,9 +47,9 @@ for C in 5 10 15; do
 	    continue;
 	fi
 
-	for E in 5 10 15; do
+	for E in 3 5 8; do #centered on 5
 
-	    for f in 0.05 0.1 0.15; do # fraction to keep
+	    for f in 0.03 0.05 0.08; do # centered on 0.05
 
 		F=`echo "$D * $E * $f" | bc | awk -F. '{print $1}'`
 		if [[ ${#F} -eq "0" ]]; then
@@ -58,9 +58,9 @@ for C in 5 10 15; do
 		    continue;
 		fi
 
-		for G in 1 5 10; do
+		for G in 3 5 8; do #centered on 5
 
-		    for h in 0.1 0.15 0.25; do # fraction to keep
+		    for h in 0.08 0.1 0.13; do # centered on 0.1
 
 			H=`echo "$F * $G * $h" | bc | awk -F. '{print $1}'`
 
