@@ -27,6 +27,7 @@
 # </Stage>
 
 A=500 #number of trajectories
+time_limit="5h"
 
 if [ -f _results ]; then
     echo "Will not overwrite existing _results file" 1>&2
@@ -60,53 +61,55 @@ for C in 8 10 13; do #centered on 10
 
 		for G in 3 5 8; do #centered on 5
 
-		    for h in 0.08 0.1 0.13; do # centered on 0.1
+		H=$A
 
-			H=`echo "$F * $G * $h" | bc | awk -F. '{print $1}'`
+		    #for h in 0.08 0.1 0.13; do # centered on 0.1
 
-			if [[ ${#H} -eq "0" ]]; then
-			    continue;
-			elif [[ $H -eq 0 ]]; then
-			    continue;
-			fi
+			#H=`echo "$F * $G * $h" | bc | awk -F. '{print $1}'`
+
+			#if [[ ${#H} -eq "0" ]]; then
+			#    continue;
+			#elif [[ $H -eq 0 ]]; then
+			#    continue;
+			#fi
 
 			# create temp script
-			cat template.xml \
-			    | sed "s/##A##/$A/g" \
-			    | sed "s/##C##/$C/g" \
-			    | sed "s/##D##/$D/g" \
-			    | sed "s/##E##/$E/g" \
-			    | sed "s/##F##/$F/g" \
-			    | sed "s/##G##/$G/g" \
-			    | sed "s/##H##/$H/g" > temp.xml
+		cat template.xml \
+		    | sed "s/##A##/$A/g" \
+		    | sed "s/##C##/$C/g" \
+		    | sed "s/##D##/$D/g" \
+		    | sed "s/##E##/$E/g" \
+		    | sed "s/##F##/$F/g" \
+		    | sed "s/##G##/$G/g" \
+		    | sed "s/##H##/$H/g" > temp.xml
 
-			#exit 0
+		#exit 0
 
-			cp -r template_dir working_dir
-			cd working_dir
+		cp -r template_dir working_dir
+		cd working_dir
 
-			#RUN
-			#/usr/bin/time -f "%U"
-			#Let's not use /usr/bin/time and just to time counting internally
-			echo Running $A $C $d $D $E $f $F $G $h $H `date`
-			timeout 1h mpirun -n 12 multistage_rosetta_scripts.mpiserialization.linuxgccrelease @ flags
+		#RUN
+		#/usr/bin/time -f "%U"
+		#Let's not use /usr/bin/time and just to time counting internally
+		echo Running $A $C $d $D $E $f $F $G $h $H `date`
+		timeout $time_limit mpirun -n 12 multistage_rosetta_scripts.mpiserialization.linuxgccrelease @ flags
 
-			cat score.sc >> ../all_scores.sc
+		cat score.sc >> ../all_scores.sc
 
-			#ANALYZE
-			for x in 1 5 10 25 50 100; do
-			    if [[ `grep vav1_start_node_and_partner score.sc | wc -l` -ge $x ]]; then
-				mean_score=$(awk -v c1=MS_weighted -f ../print_column_no_header.awk score.sc \
-						 | sort -nk1 | head -n $x | awk -f ../average.awk
-					  )
-				echo $A $C $d $D $E $f $F $G $h $H $x $mean_score >> ../_results
-			    fi
-			done
+		#ANALYZE
+		for x in 1 5 10 25 50 100; do
+		    if [[ `grep vav1_start_node_and_partner score.sc | wc -l` -ge $x ]]; then
+			mean_score=$(awk -v c1=MS_weighted -f ../print_column_no_header.awk score.sc \
+					 | sort -nk1 | head -n $x | awk -f ../average.awk
+				  )
+			echo $A $C $d $D $E $f $F $G $h $H $x $mean_score >> ../_results
+		    fi
+		done
 
-			cd ../
-			rm -rf working_dir
+		cd ../
+		rm -rf working_dir
 
-		    done
+		   #done
 
 		done
 
