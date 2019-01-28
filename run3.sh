@@ -28,14 +28,15 @@
 
 A=500 #number of trajectories
 time_limit="5h"
+unique_tag="run3"
 
-if [ -f _results ]; then
-    echo "Will not overwrite existing _results file" 1>&2
+if [ -f _results.$unique_tag ]; then
+    echo "Will not overwrite existing _results.$unique_tag file" 1>&2
     exit 1
 fi
 
 #echo $A $C $d $D $E $f $F $G $h $H $x $mean_score >> _results
-echo "NTRAJ C d D E f F G h H num_designs mean_score" > _results
+echo "NTRAJ C d D E f F G h H num_designs mean_score" > _results.$unique_tag
 
 for C in 8 10 13; do #centered on 10
 
@@ -94,7 +95,7 @@ for C in 8 10 13; do #centered on 10
 		echo Running $A $C $d $D $E $f $F $G $h $H `date`
 		timeout $time_limit mpirun -n 12 multistage_rosetta_scripts.mpiserialization.linuxgccrelease @ flags
 
-		cat score.sc >> ../all_scores.sc
+		cat score.sc >> ../all_scores.$unique_tag.sc
 
 		#ANALYZE
 		for x in 1 5 10 25 50 100; do
@@ -102,7 +103,7 @@ for C in 8 10 13; do #centered on 10
 			mean_score=$(awk -v c1=MS_weighted -f ../print_column_no_header.awk score.sc \
 					 | sort -nk1 | head -n $x | awk -f ../average.awk
 				  )
-			echo $A $C $d $D $E $f $F $G $h $H $x $mean_score >> ../_results
+			echo $A $C $d $D $E $f $F $G $h $H $x $mean_score >> ../_results.$unique_tag
 		    fi
 		done
 
